@@ -19,12 +19,13 @@ import HttpStatusCodes from '@src/common/HttpStatusCodes';
 import { RouteError } from '@src/common/classes';
 import { NodeEnvs } from '@src/common/misc';
 import ExampleService from './services/ExampleService';
+import Example from './models/Example';
+import ExampleRoutes from './routes/ExampleRoutes';
 
 
 // **** Variables **** //
 
 const app = express();
-
 
 // **** Setup **** //
 
@@ -85,11 +86,31 @@ app.get('/users', (_: Request, res: Response) => {
   return res.sendFile('users.html', { root: viewsDir });
 });
 
-// Examples
+// GET: Example
 app.get("/examples", async (_: Request, res: Response) => {
-  return res.end(JSON.stringify(await ExampleService.getAll()))
+  // return res.end(JSON.stringify(await ExampleService.getAll()));
+  return res.end(JSON.stringify(await ExampleRoutes.getAll(_, res)));
 });
 
+// ***
+
+// DELETE: Example
+app.delete("/examples/delete/:id", async (_: Request, res: Response) => {
+  // return res.end(JSON.stringify(await ExampleService.delete(Number(_.params.id))));
+  return res.end(JSON.stringify(await ExampleRoutes.delete(_, res)));
+});
+
+// PATCH: Example
+app.patch("/examples/update/:id&:name", async (_: Request, res: Response) => {
+  // return res.end(JSON.stringify(await ExampleService.updateOne(Example.from(_.params))));
+  return res.end(JSON.stringify(await ExampleRoutes.update(_, res)));
+});
+
+// POST: Example
+app.post("/examples/add/:id&:name", async (_: Request, res: Response) => {
+  // return res.end(JSON.stringify(await ExampleService.addOne(Example.from(_.params))));
+  return res.end(JSON.stringify(await ExampleRoutes.add(_, res)));
+});
 
 // **** Export default **** //
 

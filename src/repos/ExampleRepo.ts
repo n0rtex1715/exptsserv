@@ -2,7 +2,6 @@ import { ExampleType } from '@src/models/Example';
 import { getRandomInt } from '@src/util/misc';
 import orm from './MockOrm';
 
-// Get one example
 async function getOne(id: number): Promise<ExampleType | null> {
   const db = await orm.openDb();
 
